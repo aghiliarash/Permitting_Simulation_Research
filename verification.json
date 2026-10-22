@@ -1,0 +1,40 @@
+{
+  "test1_positivity_all_phases_gt_zero": true,
+  "test2_strict_milestone_ordering": true,
+  "test3a_pure_feedforward_route": {
+    "analytical_expected_days": 41.2545,
+    "simulated_mean_days": 41.2473,
+    "mc_standard_error_days": 0.0614,
+    "abs_discrepancy_days": 0.0072,
+    "z_score": 0.1181,
+    "relative_error_pct": 0.0176,
+    "passed": true
+  },
+  "test3b_zero_rework_mixture_route": {
+    "analytical_expected_days": 51.8151,
+    "simulated_mean_days": 51.6766,
+    "mc_standard_error_days": 0.0901,
+    "abs_discrepancy_days": 0.1385,
+    "z_score": 1.5371,
+    "relative_error_pct": 0.2673,
+    "passed": true
+  },
+  "test4_deterministic_seed_replicability": true,
+  "test5_external_benchmark_complete_rework_removal": {
+    "published_teinemaa_bimp_reduction_pct": 24.46,
+    "zero_first_and_second_loop_rework_verified": true,
+    "C0_baseline_mean_days": 65.18,
+    "C0_zero_rework_mean_days": 51.73,
+    "simulated_C0_complete_rework_removal_reduction_pct": 20.63,
+    "C1_baseline_mean_days": 75.93,
+    "C1_zero_rework_mean_days": 61.78,
+    "simulated_C1_complete_rework_removal_reduction_pct": 18.63
+  },
+  "test6_matched_complete_input_vectors": {
+    "passed": true,
+    "configurations": 3,
+    "policies_per_configuration": 4,
+    "vectors_per_policy": 100,
+    "phase_scales_per_vector": 16
+  }
+}

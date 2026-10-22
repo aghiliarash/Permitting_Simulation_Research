@@ -1,0 +1,240 @@
+{
+  "metadata": {
+    "study_title": "Administrative Coordination and Permitting Delays: An Open-Data-Informed Simulation Study",
+    "version_date": "2026-10-21",
+    "random_seed": 20261021,
+    "primary_evidence_source": "BPI Challenge 2015 (Five Dutch Municipalities, 4TU.ResearchData DOI: 10.4121/uuid:31a308ef-c844-48da-948c-305d167a0ec1)",
+    "diagnostic_reference": "Teinemaa, Leontjeva, & Masing (2015), BPIC 2015: Diagnostics of Building Permit Application Process in Dutch Municipalities"
+  },
+  "layer_A_observed_evidence": {
+    "collection_totals": {
+      "municipalities": 5,
+      "total_applications": 5649,
+      "total_events": 262628,
+      "unique_activity_codes": 495,
+      "unique_english_activity_names": 356,
+      "core_2013_2014_phase_subsample_cases": 1351,
+      "core_frequent_variants_count": 18,
+      "observed_inter_arrival_mean_hours": 13.0,
+      "observed_administrators_count": 15,
+      "observed_decision_makers_count": 31,
+      "timestamp_identifiability_note": "Teinemaa et al. (2015, Sec. 2, pp. 3-6) audited eight timestamp attributes and identified extensive missingness in five attributes (dueDate, dateStop, planned, endDatePlanned, and endDate), measuring elapsed intervals using sequential time:timestamp values with three-digit action codes (01_HOOFD_xxx) used to order events within tied timestamp batches. Subtracting time:timestamp from dateFinished also produced negative differences whose recording conventions could not be clarified with the process owner.",
+      "provenance": "Directly observed in published source (van Dongen 2015; Teinemaa et al. 2015, Sec. 2 & Sec. 6)"
+    },
+    "municipalities": {
+      "M1": {
+        "doi": "10.4121/uuid:a0addfda-2044-4541-a450-fdcc9fe16d17",
+        "cases": 1199,
+        "events": 52217,
+        "event_classes": 398,
+        "mean_events_per_case": 43.55,
+        "cross_replay_fitness": [
+          0.972,
+          0.918,
+          0.974,
+          0.948,
+          0.945
+        ],
+        "organizational_profile": "3 specialized role clusters (admin, regular DM, environmental DM); phase-transfer registration lags"
+      },
+      "M2": {
+        "doi": "10.4121/uuid:63a8435a-077d-4ece-97cd-2c76d394d99c",
+        "cases": 832,
+        "events": 44354,
+        "event_classes": 410,
+        "mean_events_per_case": 53.31,
+        "cross_replay_fitness": [
+          0.843,
+          0.97,
+          0.864,
+          0.847,
+          0.857
+        ],
+        "organizational_profile": "Generalist roles with high self-loops; extended-case & objection delays; shared staff (560530, 560532) with M5"
+      },
+      "M3": {
+        "doi": "10.4121/uuid:ed445cdd-27d5-4d77-a1f7-59fe7360cfbe",
+        "cases": 1409,
+        "events": 59681,
+        "event_classes": 383,
+        "mean_events_per_case": 42.36,
+        "cross_replay_fitness": [
+          0.933,
+          0.9,
+          0.936,
+          0.944,
+          0.905
+        ],
+        "organizational_profile": "Single generalist cluster with frequent inter-resource handoffs; intake confirmation delays"
+      },
+      "M4": {
+        "doi": "10.4121/uuid:679b11cf-47cd-459e-a6de-9ca614e25985",
+        "cases": 1053,
+        "events": 47293,
+        "event_classes": 356,
+        "mean_events_per_case": 44.91,
+        "cross_replay_fitness": [
+          0.967,
+          0.931,
+          0.972,
+          0.979,
+          0.944
+        ],
+        "organizational_profile": "Strong April/June closure peaks; sign-off bottleneck at resource 560752 in decision irrevocable stage"
+      },
+      "M5": {
+        "doi": "10.4121/uuid:b32c6fe5-f212-4286-9774-58dd53511cf8",
+        "cases": 1156,
+        "events": 59083,
+        "event_classes": 398,
+        "mean_events_per_case": 51.11,
+        "cross_replay_fitness": [
+          0.916,
+          0.919,
+          0.923,
+          0.909,
+          0.933
+        ],
+        "organizational_profile": "High completeness-subcase frequency; hub concentration at resources 560600 and 560602"
+      }
+    },
+    "phase_holding_durations_hours": {
+      "application_received": 88.536,
+      "asked_additional_info": 759.022,
+      "additional_info_received": 255.366,
+      "application_receptive": 536.76,
+      "advice_known": 26.873,
+      "concept_draft_decision_ready": 753.279,
+      "concept_decision_ready": 64.952,
+      "draft_decision_ready": 47.889,
+      "draft_decision_made": 4.0,
+      "decision_ready": 105.43,
+      "decision_taken": 53.156,
+      "decision_sent": 62.512,
+      "decision_irrevocable": 982.356,
+      "end_phase": 68.548,
+      "prematurely_terminated": 684.699,
+      "permanently_suspended": 871.624
+    },
+    "phase_holding_durations_days": {
+      "application_received": 3.689,
+      "asked_additional_info": 31.6259,
+      "additional_info_received": 10.6402,
+      "application_receptive": 22.365,
+      "advice_known": 1.1197,
+      "concept_draft_decision_ready": 31.3866,
+      "concept_decision_ready": 2.7063,
+      "draft_decision_ready": 1.9954,
+      "draft_decision_made": 0.1667,
+      "decision_ready": 4.3929,
+      "decision_taken": 2.2148,
+      "decision_sent": 2.6047,
+      "decision_irrevocable": 40.9315,
+      "end_phase": 2.8562,
+      "prematurely_terminated": 28.5291,
+      "permanently_suspended": 36.3177
+    },
+    "contextual_bimp_reference": {
+      "baseline_duration_units": 6249.6,
+      "rework_eliminated_duration_units": 4720.8,
+      "relative_duration_reduction_pct": 24.46,
+      "simulations_per_scenario": 3,
+      "cases_per_simulation": 2000,
+      "provenance": "Published stochastic what-if BIMP simulation in Teinemaa et al. (2015, Sec. 6, Table 5, p. 21), which estimated branching probabilities, fitted exponential phase-duration distributions, and ran three simulations of 2,000 cases for each scenario (modifying both clarification phases and premature termination steps). Used as a contextual comparison, not as an independent validation test or calibration target."
+    }
+  },
+  "layer_B_simulation_assumptions": {
+    "distributional_and_uncertainty_assumptions": {
+      "phase_holding_time_distributions": "Gamma distributions parameterized to preserve exact published Layer A phase means with assumed baseline shape parameters: S1 k=1.0 (exponential fit in Teinemaa et al. 2015 Fig. 16), S2 loop k=2.0, S3 receptive k=1.5, S3 advice k=1.2, S4 concept/draft/decision_ready k=1.5 (draft_made k=1.0), S5 taken/sent k=1.5, S6 irrevocable k=3.0 (end k=1.5)",
+      "replicate_percentile_range_definition": "95% Replicate-Percentile Range [Rep PR] (2.5th to 97.5th percentile across 30 Monte Carlo replications of N=2,000 cases under fixed baseline parameters), describing finite-batch simulation variability alongside batch-mean standard error SE_batch",
+      "assumed_input_variation_interval_definition": "95% Assumed-Input Variation Interval {Input VI} across 100 parameter vectors theta_j applying an assumed 12% coefficient of variation (Gamma scaling) to all phase holding-time means, Normal(0.28, 0.03) clipped to [0.18, 0.40] for baseline rework probability, and Normal(3.2, 0.40) clipped to [2.0, 4.5] days for handoff delay",
+      "matched_input_contrast_design": "Within each configuration, B0_baseline, I1_routing_continuity, I2_rework_prevention, and I3_targeted_intake are evaluated across the exact same 100 parameter vectors theta_j (rng_theta = default_rng(cfg_seed + 100000)) and matched trajectory seeds (rng_traj = default_rng(cfg_seed + 200000 + j) and rng_mc = default_rng(cfg_seed + r)), isolating Delta_j = g(I, theta_j) - g(B0, theta_j)",
+      "provenance": "Scenario assumption (distributional shapes and 12% input-perturbation bands are modeling assumptions, not empirically estimated sampling distributions)"
+    },
+    "complexity_index": {
+      "distribution": "Beta(2.0, 2.0)",
+      "low_band": [
+        0.0,
+        0.35
+      ],
+      "intermediate_band": [
+        0.35,
+        0.7
+      ],
+      "high_band": [
+        0.7,
+        1.0
+      ],
+      "provenance": "Scenario assumption (normalized operational complexity proxy for required subcases and advice steps)"
+    },
+    "branching_handoff_and_rework_specification": {
+      "first_loop_rework_probability_formula": "p_rework_1(C_i) = clip(rework_prob_base + 0.20 * (C_i - 0.50), 0.05, 0.65) when rework is active; 0.0 when disable_rework=True",
+      "second_loop_conditional_prob_formula": "p_rework_2_given_1(C_i) = 0.15 * (p_rework_1_eff(C_i) / 0.28), scaling proportionally with effective first-loop rework probability",
+      "second_loop_duration_scaling": 0.85,
+      "extended_draft_branch_prob_formula": "0.10 + 0.55 * C_i (mean = 0.375 over Beta(2,2))",
+      "advice_step_condition": "1 advice step if C_i >= 0.35; 50% weight additional advice step if C_i > 0.70",
+      "expected_handoffs_formula": "H_i ~ Poisson(max(0.1, (1.5 + 3.2 * C_i) * handoff_mult + 1.2 * n_rework_loops))",
+      "case_level_handoff_delay_draw": "Each case i draws a shared case-level per-handoff delay factor d_i ~ Gamma(2.0, eta / 2.0) multiplying its realized handoff count H_i (T_coord,i = H_i * d_i)",
+      "provenance": "Scenario assumption"
+    },
+    "competing_coordination_configurations": {
+      "C0_no_friction": {
+        "demand_multiplier_rho": 1.0,
+        "handoff_delay_eta_days": 0.0,
+        "description": "Reference holding times without additional coordination penalties (published BPI 2015 phase holding durations with zero added handoff penalty)"
+      },
+      "C1_linear_handoff": {
+        "demand_multiplier_rho": 1.0,
+        "handoff_delay_eta_days": 3.2,
+        "description": "Linear handoff friction where each case's Poisson handoff count H_i is multiplied by a case-level draw d_i ~ Gamma(2, 1.6) days (mean 3.2 d)"
+      },
+      "C2_threshold_governance": {
+        "demand_multiplier_rho": 1.0,
+        "low_tier_handoff_delay_days": 0.8,
+        "base_handoff_delay_days": 1.6,
+        "mid_tier_extra_handoffs_mean": 3.5,
+        "mid_tier_referral_delay_days": 6.8,
+        "high_tier_coordination_factor_gamma": 0.78,
+        "description": "Threshold referral regime where intermediate cases (0.35 <= C_i <= 0.70) incur extra specialist referrals while high-tier cases (C_i > 0.70) receive senior case-team coordination scaling S3 and S4 by gamma_high"
+      },
+      "C3_congestion_rework": {
+        "demand_multiplier_rho": 1.25,
+        "handoff_delay_eta_days": 3.2,
+        "imposed_congestion_multiplier_formula": "1.0 + 0.65 * (rho - 1.0) * (1.0 + 0.90 * mean_p_rework_eff), plus 1.12x scaling on S2 rework holding time and 1.10x scaling on handoff delay",
+        "description": "Imposed workload-and-rework congestion scenario increasing upper-tail delay relative to the reference comparison via a parametric multiplier (not an empirical estimate of a real 25% arrival increase or an endogenous continuous-time queueing model)"
+      }
+    },
+    "core_management_interventions": {
+      "B0_baseline": {
+        "description": "Unmodified baseline permitting workflow",
+        "handoff_reduction_fraction": 0.0,
+        "rework_prob_reduction_fraction": 0.0,
+        "rework_duration_reduction_fraction": 0.0,
+        "hypothetical_relative_cost_units": 0.0
+      },
+      "I1_routing_continuity": {
+        "description": "Case-ownership continuity reducing inter-resource handoffs by 60%",
+        "handoff_reduction_fraction": 0.6,
+        "rework_prob_reduction_fraction": 0.0,
+        "rework_duration_reduction_fraction": 0.0,
+        "hypothetical_relative_cost_units": 1.0
+      },
+      "I2_rework_prevention": {
+        "description": "Pre-submission digital completeness check reducing clarification rework probability by 50% and rework holding time by 15%",
+        "handoff_reduction_fraction": 0.0,
+        "rework_prob_reduction_fraction": 0.5,
+        "rework_duration_reduction_fraction": 0.15,
+        "hypothetical_relative_cost_units": 1.7
+      },
+      "I3_targeted_intake": {
+        "description": "Targeted early intake review for upper-complexity cases (C_i > 0.55, ~42.4% of applications at baseline) reducing their rework probability by 45%, rework duration by 25%, and handoffs by 50%",
+        "handoff_reduction_fraction_targeted": 0.5,
+        "rework_prob_reduction_fraction_targeted": 0.45,
+        "rework_duration_reduction_fraction_targeted": 0.25,
+        "complexity_threshold": 0.55,
+        "targeting_accuracy_baseline": 1.0,
+        "hypothetical_relative_cost_units": 1.3
+      }
+    }
+  }
+}
