@@ -1,0 +1,127 @@
+"""Generate the complete deterministic research dataset."""
+from pathlib import Path
+import sys, json, csv, platform, hashlib
+import numpy as np
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from src.model import (SEED, PHASE_HOURS, OBSERVED_BPI2015_MUNICIPALITIES,
+    build_parameters_and_assumptions, run_scenario_with_uncertainty,
+    compute_paired_contrasts, run_verification_and_sensitivity_suite)
+
+CONFIGS = ['C0_no_friction','C1_linear_handoff','C2_threshold_governance','C3_congestion_rework']
+POLICIES = ['B0_baseline','I1_routing_continuity','I2_rework_prevention','I3_targeted_intake']
+
+def write_json(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=2, allow_nan=False) + '\n', encoding='utf-8')
+
+def write_csv(path, rows):
+    if not rows:
+        raise ValueError(f'No data for {path}')
+    fields = list(dict.fromkeys(k for r in rows for k in r))
+    with path.open('w', newline='', encoding='utf-8') as f:
+        w = csv.DictWriter(f, fieldnames=fields)
+        w.writeheader(); w.writerows(rows)
+
+def generate():
+    inp = ROOT/'data/inputs'; dst = ROOT/'data/processed'
+    inp.mkdir(parents=True, exist_ok=True); dst.mkdir(parents=True, exist_ok=True)
+    configurations = {}; interventions = {}; ensembles = {}; thetas = {}
+    summaries=[]; tier_rows=[]; contrast_rows=[]; batch_rows=[]; scenario_rows=[]; theta_rows=[]
+    def collect(block,cfg,policy,seed,res):
+        key=f'{block}/{cfg}/{policy}'
+        ensembles[key]={'replications':res['_mc_records'],'input_scenarios':res['_param_records']}
+        thetas[key]=res['_theta_records']
+        for metric,s in res['overall'].items():
+            summaries.append(dict(block=block,configuration=cfg,policy=policy,base_seed=seed,metric=metric,
+                estimate=s['estimate'],batch_mean_se=s['se_batch'],rep_pr_lower=s['mc_ci_95'][0],
+                rep_pr_upper=s['mc_ci_95'][1],input_vi_lower=s['param_ui_95'][0],input_vi_upper=s['param_ui_95'][1]))
+        for tier,metrics in res['by_tier'].items():
+            for metric,value in metrics.items():tier_rows.append(dict(block=block,configuration=cfg,policy=policy,tier=tier,metric=metric,estimate=value,base_seed=seed))
+        for kind,rows in [('replication',res['_mc_records']),('input_scenario',res['_param_records'])]:
+            dest=batch_rows if kind=='replication' else scenario_rows
+            for i,row in enumerate(rows):dest.append(dict(block=block,configuration=cfg,policy=policy,index=i,trajectory_seed=seed+i if kind=='replication' else seed+200000+i,**row))
+        for i,theta in enumerate(res['_theta_records']):
+            theta_rows.append(dict(block=block,configuration=cfg,policy=policy,scenario_index=i,
+                parameter_generator_seed=seed+100000,trajectory_seed=seed+200000+i,
+                rework_prob_base=theta['rework_prob_base'],handoff_delay_base=theta['handoff_delay_base'],
+                **{f'phase_scale_{k}':v for k,v in theta['phase_scale_factors'].items()}))
+    for i,cfg in enumerate(CONFIGS):
+        seed=SEED+i*1000
+        res=run_scenario_with_uncertainty(cfg,'B0_baseline',base_seed=seed)
+        collect('configuration',cfg,'B0_baseline',seed,res)
+        configurations[cfg]={'overall':res['overall'],'by_tier':res['by_tier']}
+    for i,cfg in enumerate(CONFIGS[1:]):
+        seed=SEED+10000+i*2000
+        raw={p:run_scenario_with_uncertainty(cfg,p,base_seed=seed) for p in POLICIES}
+        assert all(raw[p]['_theta_records']==raw['B0_baseline']['_theta_records'] for p in POLICIES)
+        interventions[cfg]={}
+        for policy,res in raw.items():
+            collect('intervention',cfg,policy,seed,res)
+            entry={'overall':res['overall'],'by_tier':res['by_tier']}
+            if policy!='B0_baseline':
+                paired=compute_paired_contrasts(res,raw['B0_baseline']);entry['paired_contrasts_vs_B0']=paired
+                for metric,s in paired.items():contrast_rows.append(dict(configuration=cfg,policy=policy,metric=metric,
+                    delta=s['estimate'],batch_mean_se=s['se_batch'],rep_pr_lower=s['rep_pr_95'][0],rep_pr_upper=s['rep_pr_95'][1],
+                    input_vi_lower=s['input_vi_95'][0],input_vi_upper=s['input_vi_95'][1],base_seed=seed))
+            interventions[cfg][policy]=entry
+    suite=run_verification_and_sensitivity_suite()
+    suite['verification_tests']['test6_matched_complete_input_vectors']={'passed':True,'configurations':3,'policies_per_configuration':4,'vectors_per_policy':100,'phase_scales_per_vector':16}
+    metadata={'base_seed':SEED,'mc_replications':30,'cases_per_replication':2000,'input_scenarios':100,'cases_per_input_scenario':1500,
+        'schema_version':'1.0.0','matching':'Complete input vectors and shared trajectory seeds; random-draw alignment across policy-dependent branches is not asserted.',
+        'data_type':'Synthetic aggregate simulation outputs; no municipal case-level records included.'}
+    results={'metadata':metadata,'configuration_experiments':configurations,'intervention_experiments':interventions,'verification_and_sensitivity':suite}
+    write_json(inp/'parameters_and_assumptions.json',build_parameters_and_assumptions())
+    write_csv(inp/'phase_means.csv',[dict(phase=k,mean_hours=v,mean_days=v/24) for k,v in PHASE_HOURS.items()])
+    write_csv(inp/'municipal_inventory.csv',[dict(municipality=k,doi=v['doi'],cases=v['cases'],events=v['events'],event_classes=v['event_classes']) for k,v in OBSERVED_BPI2015_MUNICIPALITIES.items()])
+    write_json(dst/'results.json',results)
+    for name,rows in [('scenario_summaries',summaries),('tier_summaries',tier_rows),('matched_contrasts',contrast_rows),('replication_metrics',batch_rows),('input_scenario_metrics',scenario_rows),('input_vectors',theta_rows)]:write_csv(dst/f'{name}.csv',rows)
+    write_csv(dst/'complexity_grid.csv',suite['c2_hump_emergence_grid'])
+    eff=[];shape=[]
+    for row in suite['sensitivity_effectiveness']:
+        for policy in POLICIES:eff.append(dict(effectiveness_multiplier=row['effectiveness_multiplier'],policy=policy,seed=SEED+900,n_cases=25000,**row[policy]))
+    for row in suite['sensitivity_holding_shape']:
+        for policy in POLICIES:shape.append(dict(gamma_shape_multiplier=row['gamma_shape_multiplier'],policy=policy,seed=SEED+1500,n_cases=25000,**row[policy]))
+    write_csv(dst/'sensitivity_effectiveness.csv',eff)
+    write_csv(dst/'sensitivity_targeting.csv',[dict(seed=SEED+1200,n_cases=25000,**r) for r in suite['sensitivity_targeting_error']])
+    write_csv(dst/'sensitivity_shape.csv',shape)
+    write_json(dst/'verification.json',suite['verification_tests'])
+    write_json(ROOT/'metadata/environment.json',{'python':platform.python_version(),'numpy':np.__version__,'platform':platform.platform()})
+    export_views(results, dst)
+    return results
+
+
+def export_views(results, dst):
+    rows=[]
+    def add(figure,panel,cfg,policy,metric,estimate,lower='',upper='',**extra):
+        rows.append(dict(figure=figure,panel=panel,configuration=cfg,policy=policy,metric=metric,
+            estimate=estimate,interval_lower=lower,interval_upper=upper,**extra))
+    for cfg,d in results['configuration_experiments'].items():
+        for tier,m in d['by_tier'].items():add(2,'a',cfg,'B0_baseline','T50',m['median'],tier=tier,unit='days')
+    suite=results['verification_and_sensitivity']
+    for g in suite['c2_hump_emergence_grid']:
+        add(2,'b','C2_threshold_governance','B0_baseline','V',g['excess_above_2d_criterion_V'],unit='days',
+            extra_referrals=g['mid_extra_handoffs'],high_tier_factor=g['high_coord_factor_gamma'],
+            low_median=g['median_Low'],mid_median=g['median_Mid'],high_median=g['median_High'])
+    for cfg,policies in results['intervention_experiments'].items():
+        for p,d in policies.items():
+            if p=='B0_baseline':continue
+            for panel,m in [('a','R_180'),('b','p90')]:
+                c=d['paired_contrasts_vs_B0']['delta_'+m]
+                add(3,panel,cfg,p,'reduction_'+m,-c['estimate'],-c['input_vi_95'][1],-c['input_vi_95'][0],unit='days',interval_type='95% assumed-input variation')
+    for r in suite['sensitivity_effectiveness']:
+        for p in POLICIES[1:]:add(4,'a','C1_linear_handoff',p,'reduction_R_180',r[p]['reduction_R_180_vs_same_seed_B0'],
+            unit='days',effectiveness_multiplier=r['effectiveness_multiplier'],baseline_R180=r['B0_baseline']['R_180'],intervention_R180=r[p]['R_180'])
+    benefits={}
+    for p,cost in zip(POLICIES[1:],[1.0,1.7,1.3]):
+        benefit=-results['intervention_experiments']['C1_linear_handoff'][p]['paired_contrasts_vs_B0']['delta_R_180']['estimate']
+        benefits[p]=benefit
+        add(4,'b','C1_linear_handoff',p,'benefit_per_cost',round(benefit/cost,2),unit='days_per_relative_cost',benefit_days=benefit,relative_cost=cost)
+    write_csv(dst/'figure_data.csv',rows)
+    boundary=[]
+    for a,b in [(POLICIES[2],POLICIES[1]),(POLICIES[3],POLICIES[1]),(POLICIES[2],POLICIES[3])]:
+        boundary.append(dict(numerator_policy=a,denominator_policy=b,break_even_cost_ratio=benefits[a]/benefits[b],numerator_benefit_days=benefits[a],denominator_benefit_days=benefits[b]))
+    write_csv(dst/'cost_boundaries.csv',boundary)
+
+if __name__=='__main__':
+    generate()
