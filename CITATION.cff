@@ -3,10 +3,14 @@ message: "Please cite this computational dataset and software when using these m
 title: "Administrative Coordination and Permitting Delays: Computational Dataset and Simulation Code"
 type: software
 version: "1.0.0"
+license: MIT
+
 authors:
-  - family-names: Aghili
-    given-names: Arash
+  - family-names: "Aghili"
+    given-names: "Arash"
+
 keywords:
   - building permitting
   - semi-Markov simulation
   - administrative coordination
+  - reproducible research
