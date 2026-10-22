@@ -8,6 +8,7 @@
     }
   ],
   "version": "1.0.0",
+  "license": "mit",
   "keywords": [
     "building permitting",
     "semi-Markov simulation",
