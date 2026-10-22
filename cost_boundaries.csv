@@ -1,4 +1,0 @@
-numerator_policy,denominator_policy,break_even_cost_ratio,numerator_benefit_days,denominator_benefit_days
-I2_rework_prevention,I1_routing_continuity,1.3954703832752613,8.01,5.74
-I3_targeted_intake,I1_routing_continuity,1.1202090592334495,6.43,5.74
-I2_rework_prevention,I3_targeted_intake,1.245723172628305,8.01,6.43
