@@ -1,0 +1,241 @@
+{
+  "data/inputs/municipal_inventory.csv": {
+    "columns": [
+      "municipality",
+      "doi",
+      "cases",
+      "events",
+      "event_classes"
+    ],
+    "row_count": 5
+  },
+  "data/inputs/phase_means.csv": {
+    "columns": [
+      "phase",
+      "mean_hours",
+      "mean_days"
+    ],
+    "row_count": 16
+  },
+  "data/processed/complexity_grid.csv": {
+    "columns": [
+      "mid_extra_handoffs",
+      "high_coord_factor_gamma",
+      "median_Low",
+      "median_Mid",
+      "median_High",
+      "R90_Low",
+      "R90_Mid",
+      "R90_High",
+      "excess_above_2d_criterion_V",
+      "hump_emerges"
+    ],
+    "row_count": 20
+  },
+  "data/processed/cost_boundaries.csv": {
+    "columns": [
+      "numerator_policy",
+      "denominator_policy",
+      "break_even_cost_ratio",
+      "numerator_benefit_days",
+      "denominator_benefit_days"
+    ],
+    "row_count": 3
+  },
+  "data/processed/figure_data.csv": {
+    "columns": [
+      "figure",
+      "panel",
+      "configuration",
+      "policy",
+      "metric",
+      "estimate",
+      "interval_lower",
+      "interval_upper",
+      "tier",
+      "unit",
+      "extra_referrals",
+      "high_tier_factor",
+      "low_median",
+      "mid_median",
+      "high_median",
+      "interval_type",
+      "effectiveness_multiplier",
+      "baseline_R180",
+      "intervention_R180",
+      "benefit_days",
+      "relative_cost"
+    ],
+    "row_count": 65
+  },
+  "data/processed/input_scenario_metrics.csv": {
+    "columns": [
+      "block",
+      "configuration",
+      "policy",
+      "index",
+      "trajectory_seed",
+      "mean",
+      "median",
+      "iqr_25",
+      "iqr_75",
+      "p90",
+      "P_56",
+      "P_90",
+      "P_180",
+      "R_90",
+      "R_180",
+      "T_irrev_median",
+      "T_irrev_p90",
+      "rework_rate_pct",
+      "second_rework_rate_pct",
+      "mean_handoffs",
+      "triaged_share_pct",
+      "true_positive_coverage_pct",
+      "false_positive_rate_pct"
+    ],
+    "row_count": 1600
+  },
+  "data/processed/input_vectors.csv": {
+    "columns": [
+      "block",
+      "configuration",
+      "policy",
+      "scenario_index",
+      "parameter_generator_seed",
+      "trajectory_seed",
+      "rework_prob_base",
+      "handoff_delay_base",
+      "phase_scale_application_received",
+      "phase_scale_asked_additional_info",
+      "phase_scale_additional_info_received",
+      "phase_scale_application_receptive",
+      "phase_scale_advice_known",
+      "phase_scale_concept_draft_decision_ready",
+      "phase_scale_concept_decision_ready",
+      "phase_scale_draft_decision_ready",
+      "phase_scale_draft_decision_made",
+      "phase_scale_decision_ready",
+      "phase_scale_decision_taken",
+      "phase_scale_decision_sent",
+      "phase_scale_decision_irrevocable",
+      "phase_scale_end_phase",
+      "phase_scale_prematurely_terminated",
+      "phase_scale_permanently_suspended"
+    ],
+    "row_count": 1600
+  },
+  "data/processed/matched_contrasts.csv": {
+    "columns": [
+      "configuration",
+      "policy",
+      "metric",
+      "delta",
+      "batch_mean_se",
+      "rep_pr_lower",
+      "rep_pr_upper",
+      "input_vi_lower",
+      "input_vi_upper",
+      "base_seed"
+    ],
+    "row_count": 54
+  },
+  "data/processed/replication_metrics.csv": {
+    "columns": [
+      "block",
+      "configuration",
+      "policy",
+      "index",
+      "trajectory_seed",
+      "mean",
+      "median",
+      "iqr_25",
+      "iqr_75",
+      "p90",
+      "P_56",
+      "P_90",
+      "P_180",
+      "R_90",
+      "R_180",
+      "T_irrev_median",
+      "T_irrev_p90",
+      "rework_rate_pct",
+      "second_rework_rate_pct",
+      "mean_handoffs",
+      "triaged_share_pct",
+      "true_positive_coverage_pct",
+      "false_positive_rate_pct"
+    ],
+    "row_count": 480
+  },
+  "data/processed/scenario_summaries.csv": {
+    "columns": [
+      "block",
+      "configuration",
+      "policy",
+      "base_seed",
+      "metric",
+      "estimate",
+      "batch_mean_se",
+      "rep_pr_lower",
+      "rep_pr_upper",
+      "input_vi_lower",
+      "input_vi_upper"
+    ],
+    "row_count": 249
+  },
+  "data/processed/sensitivity_effectiveness.csv": {
+    "columns": [
+      "effectiveness_multiplier",
+      "policy",
+      "seed",
+      "n_cases",
+      "median",
+      "p90",
+      "P_56",
+      "R_180",
+      "reduction_R_180_vs_same_seed_B0",
+      "reduction_p90_vs_same_seed_B0"
+    ],
+    "row_count": 16
+  },
+  "data/processed/sensitivity_shape.csv": {
+    "columns": [
+      "gamma_shape_multiplier",
+      "policy",
+      "seed",
+      "n_cases",
+      "median",
+      "p90",
+      "R_180"
+    ],
+    "row_count": 12
+  },
+  "data/processed/sensitivity_targeting.csv": {
+    "columns": [
+      "seed",
+      "n_cases",
+      "targeting_noise_sigma",
+      "triaged_share_pct",
+      "true_positive_coverage_pct",
+      "false_positive_rate_pct",
+      "median",
+      "p90",
+      "P_56",
+      "R_180"
+    ],
+    "row_count": 4
+  },
+  "data/processed/tier_summaries.csv": {
+    "columns": [
+      "block",
+      "configuration",
+      "policy",
+      "tier",
+      "metric",
+      "estimate",
+      "base_seed"
+    ],
+    "row_count": 288
+  }
+}

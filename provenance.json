@@ -1,0 +1,15 @@
+{
+  "upstream_collection_doi": "10.4121/uuid:31a308ef-c844-48da-948c-305d167a0ec1",
+  "phase_diagnostics": "Teinemaa, Leontjeva, and Masing (2015), Table 4",
+  "input_type": "adopted published summaries",
+  "output_type": "synthetic aggregate simulation results",
+  "raw_logs_redistributed": false,
+  "source_code_sha256": "6136f81cb604ce022988d783dfc96fa6d3f30c5db37d29ac1a10cf0c5b3057ce",
+  "release_code_changes": [
+    "Executable model extracted from supplied text; non-Python preamble removed.",
+    "Complete unrounded input vectors archived for every scenario.",
+    "Repeatability assertion uses numpy.array_equal.",
+    "Complete normalized dataset exports and explicit interval fields."
+  ],
+  "model_equations_or_assumed_parameter_values_changed": false
+}

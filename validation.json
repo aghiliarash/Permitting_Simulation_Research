@@ -1,0 +1,26 @@
+{
+  "tests_run": 8,
+  "failures": 0,
+  "errors": 0,
+  "success": true,
+  "numpy": "1.26.4",
+  "python": "3.12.8",
+  "generated_dataset_rows": {
+    "data/inputs/municipal_inventory.csv": 5,
+    "data/inputs/phase_means.csv": 16,
+    "data/processed/complexity_grid.csv": 20,
+    "data/processed/cost_boundaries.csv": 3,
+    "data/processed/figure_data.csv": 65,
+    "data/processed/input_scenario_metrics.csv": 1600,
+    "data/processed/input_vectors.csv": 1600,
+    "data/processed/matched_contrasts.csv": 54,
+    "data/processed/replication_metrics.csv": 480,
+    "data/processed/scenario_summaries.csv": 249,
+    "data/processed/sensitivity_effectiveness.csv": 16,
+    "data/processed/sensitivity_shape.csv": 12,
+    "data/processed/sensitivity_targeting.csv": 4,
+    "data/processed/tier_summaries.csv": 288
+  },
+  "deterministic_regeneration_all_data_files": true,
+  "data_files_checked": 17
+}
