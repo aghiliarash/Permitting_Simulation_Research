@@ -1,0 +1,17 @@
+{
+  "title": "Administrative Coordination and Permitting Delays: Computational Dataset and Simulation Code",
+  "upload_type": "software",
+  "description": "Reproducible semi-Markov simulation code, published-summary input ledger, generated aggregate datasets, matched policy contrasts, sensitivity outputs, complete input vectors, figure-source data, and validation tests. Raw municipal event logs are not included.",
+  "creators": [
+    {
+      "name": "Aghili, Arash"
+    }
+  ],
+  "version": "1.0.0",
+  "keywords": [
+    "building permitting",
+    "semi-Markov simulation",
+    "administrative coordination",
+    "reproducible research"
+  ]
+}
