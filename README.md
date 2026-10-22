@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/33811981/README.md)
 # Administrative Coordination and Permitting Delays
 
 Computational dataset and semi-Markov simulation code for *Administrative Coordination and Permitting Delays: An Open-Data-Informed Simulation Study*.
