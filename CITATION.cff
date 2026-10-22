@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "Please cite this computational dataset and software when using these materials."
+title: "Administrative Coordination and Permitting Delays: Computational Dataset and Simulation Code"
+type: software
+version: "1.0.0"
+authors:
+  - family-names: Aghili
+    given-names: Arash
+keywords:
+  - building permitting
+  - semi-Markov simulation
+  - administrative coordination
